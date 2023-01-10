@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>NACO Browser</title>
+  <style>
+    #browser {
+      width: 800px;
+      height: 600px;
+      background-color: white;
+      border: 1px solid black;
+    }
+  </style>
+</head>
+<body>
+  <div id="browser"></div>
+  <form>
+    <input type="text" id="url">
+    <button type="submit">Go</button>
+  </form>
+  <button id="back">Back</button>
+  <button id="forward">Forward</button>
+  <button id="refresh">Refresh</button>
+  <button id="home">Home</button>
+  <script>
+    const browser = document.getElementById("browser");
+    const urlInput = document.getElementById("url");
+    const backButton = document.getElementById("back");
+    const forwardButton = document.getElementById("forward");
+    const refreshButton = document.getElementById("refresh");
+    const homeButton = document.getElementById("home");
+
+    const iframe = document.createElement("iframe");
+    browser.appendChild(iframe);
+
+    let currentUrl = "";
+
+    const form = document.querySelector("form");
+    form.addEventListener("submit", e => {
+      e.preventDefault();
+      currentUrl = urlInput.value;
+      iframe.src = currentUrl;
+    });
+
+    backButton.addEventListener("click", () => {
+      iframe.contentWindow.history.back();
+    });
+
+    forwardButton.addEventListener("click", () => {
+      iframe.contentWindow.history.forward();
+    });
+
+    refreshButton.addEventListener("click", () => {
+      iframe.src = currentUrl;
+    });
+
+    homeButton.addEventListener("click", () => {
+      currentUrl = "https://www.google.com";
+      iframe.src = currentUrl;
+      urlInput.value = currentUrl;
+    });
+  </script>
+</body>
+</html>
